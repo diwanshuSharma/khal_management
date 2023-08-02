@@ -22,7 +22,8 @@ public class ItemService implements IItemService {
     @Override
     public Item addItem(Item itemToAdd) {
         // add DTO to Model mapping here
-        itemRepository.save(itemToAdd)
+        //itemRepository.save(itemToAdd)
+        return null;
     }
 
     @Override
