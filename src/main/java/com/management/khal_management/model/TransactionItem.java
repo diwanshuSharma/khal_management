@@ -16,5 +16,7 @@ public class TransactionItem extends BaseModel{
     private Item item;
     private Double price;
     private Double quantity;
-    private Double total;
+    private Double totalAmount;
+    private Double paidAmount;
+    private Double pendingAmount;
 }
