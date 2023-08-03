@@ -11,7 +11,8 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item extends BaseDto{
-    private String itemName;
-    private String url;
+public class BaseDto {
+    private Long id;
+    private Date createdAt;
+    private Date updatedAt;
 }

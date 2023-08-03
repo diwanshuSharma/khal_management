@@ -2,6 +2,7 @@ package com.management.khal_management.model;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -27,8 +28,7 @@ public class BaseModel {
     private Date createdAt;
 
     @UpdateTimestamp
-    @CreatedDate
     @Temporal(TemporalType.TIMESTAMP)
     @Column(nullable = false, updatable = true)
-    private Date updated_at;
+    private Date updatedAt;
 }

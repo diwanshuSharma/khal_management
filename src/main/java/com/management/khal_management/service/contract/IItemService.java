@@ -8,5 +8,5 @@ public interface IItemService {
     Item addItem(Item itemToAdd);
     Item deleteItem(Long itemId);
     Item updateItem(Item itemToUpdate);
-    List<Item> listItems();
+    List<Item> getItems();
 }
