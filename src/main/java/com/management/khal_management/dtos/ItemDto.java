@@ -1,19 +1,15 @@
 package com.management.khal_management.dtos;
 
-import jakarta.persistence.PreUpdate;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class BaseDto {
-    private Long id;
-    private Date createdAt;
-    private Date updatedAt;
+public class ItemDto extends BaseDto{
+    private String itemName;
+    private String url;
 }

@@ -29,6 +29,6 @@ public class BaseModel {
 
     @UpdateTimestamp
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(nullable = false, updatable = true)
+    @Column(nullable = false)
     private Date updatedAt;
 }

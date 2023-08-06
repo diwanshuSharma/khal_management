@@ -8,7 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Item extends BaseModel {
+public class ItemModel extends BaseModel {
 
     private String itemName;
     @Column(columnDefinition = "TEXT")

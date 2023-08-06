@@ -8,8 +8,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class ItemPrice extends BaseModel{
+public class ItemPriceModel extends BaseModel{
     @ManyToOne
-    private Item item;
+    private ItemModel itemModel;
     private Double price;
 }

@@ -8,9 +8,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class Transaction extends BaseModel{
+public class TransactionModel extends BaseModel{
 
     @ManyToOne
-    private Customer customer;
+    private CustomerModel customerModel;
     private double totalPrice;
 }

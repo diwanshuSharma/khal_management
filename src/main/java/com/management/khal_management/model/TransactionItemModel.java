@@ -8,12 +8,12 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class TransactionItem extends BaseModel{
+public class TransactionItemModel extends BaseModel{
 
     @ManyToOne
-    private Transaction transaction;
+    private TransactionModel transactionModel;
     @ManyToOne
-    private Item item;
+    private ItemModel itemModel;
     private Double price;
     private Double quantity;
     private Double totalAmount;

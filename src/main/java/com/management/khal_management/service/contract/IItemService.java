@@ -1,12 +1,13 @@
 package com.management.khal_management.service.contract;
 
-import com.management.khal_management.dtos.Item;
+import com.management.khal_management.dtos.ItemDto;
 
 import java.util.List;
 
 public interface IItemService {
-    Item addItem(Item itemToAdd);
-    Item deleteItem(Long itemId);
-    Item updateItem(Item itemToUpdate);
-    List<Item> getItems();
+    ItemDto addItem(ItemDto itemDtoToAdd);
+    ItemDto deleteItem(Long itemId);
+    ItemDto updateItem(ItemDto itemDtoToUpdate);
+    List<ItemDto> getItems();
+    ItemDto getItemById(Long id);
 }

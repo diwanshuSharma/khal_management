@@ -9,9 +9,11 @@ import java.util.Date;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
-public class Item extends BaseDto{
-    private String itemName;
-    private String url;
+@NoArgsConstructor
+public class CustomerDto extends BaseDto{
+    private String customerName;
+    private Date dob;
+    private long mobileNumber;
+    private AddressDto addressDto;
 }

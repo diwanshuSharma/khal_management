@@ -1,13 +1,15 @@
-package com.management.khal_management.model;
+package com.management.khal_management.dtos;
 
-import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@Entity
-public class Address extends BaseModel{
+@AllArgsConstructor
+@NoArgsConstructor
+public class AddressDto extends BaseDto{
     private String address;
     private String village;
     private String thesil;
@@ -15,5 +17,4 @@ public class Address extends BaseModel{
     private String state;
     private String country;
     private int pincode;
-
 }

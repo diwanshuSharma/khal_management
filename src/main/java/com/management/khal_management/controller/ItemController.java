@@ -1,45 +1,49 @@
 package com.management.khal_management.controller;
 
-import com.management.khal_management.dtos.Item;
-import com.management.khal_management.service.implementation.ItemService;
+import com.management.khal_management.dtos.ItemDto;
+import com.management.khal_management.service.contract.IItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api")
+@RequestMapping(path = "/api/items")
 public class ItemController {
 
-    private ItemService itemService;
+    private final IItemService itemService;
 
     @Autowired
-    public ItemController(ItemService itemService) {
+    public ItemController(IItemService itemService) {
         this.itemService = itemService;
     }
 
-    @PostMapping(path = "/item/add")
-    public Item addItem(@RequestBody Item itemToAdd){
-        Item addedItem = itemService.addItem(itemToAdd);
-        return addedItem;
+    @PostMapping
+    public ItemDto addItem(@RequestBody ItemDto itemDtoToAdd){
+        ItemDto addedItemDto = itemService.addItem(itemDtoToAdd);
+        return addedItemDto;
     }
 
-    @GetMapping(path = "/items")
-    public List<Item> getItems(){
-        List<Item> items = itemService.getItems();
-        return items;
+    @GetMapping
+    public List<ItemDto> getItems(){
+        List<ItemDto> itemDtos = itemService.getItems();
+        return itemDtos;
     }
 
-    @DeleteMapping(path = "/item/delete")
-    public Item getItems(@RequestParam("id") Long itemId){
-        Item deletedItem = itemService.deleteItem(itemId);
-        return deletedItem;
+    @GetMapping("/{id}")
+    public ItemDto getCustomerById(@PathVariable Long id) {
+        return itemService.getItemById(id);
     }
 
-    @PutMapping(path = "/item/update")
-    public Item updateItem(@RequestBody Item itemToUpdate){
-        Item updatedItem = itemService.updateItem(itemToUpdate);
-        return updatedItem;
+    @DeleteMapping("/{id}")
+    public ItemDto getItems(@PathVariable Long id){
+        ItemDto deletedItemDto = itemService.deleteItem(id);
+        return deletedItemDto;
+    }
+
+    @PutMapping
+    public ItemDto updateItem(@RequestBody ItemDto itemDtoToUpdate){
+        ItemDto updatedItemDto = itemService.updateItem(itemDtoToUpdate);
+        return updatedItemDto;
     }
 }
