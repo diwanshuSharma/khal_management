@@ -1,5 +1,6 @@
-package com.management.khal_management.dtos;
+package com.management.khal_management.dtos.item_price;
 
+import com.management.khal_management.dtos.BaseDto;
 import com.management.khal_management.model.ItemModel;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemPriceDto extends BaseDto{
+public class ItemPriceResponseDto extends BaseDto {
     private ItemModel itemModel;
     private Double price;
 }

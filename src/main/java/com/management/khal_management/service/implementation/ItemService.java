@@ -1,6 +1,7 @@
 package com.management.khal_management.service.implementation;
 
-import com.management.khal_management.dtos.ItemDto;
+import com.management.khal_management.dtos.item.ItemRequestDto;
+import com.management.khal_management.dtos.item.ItemResponseDto;
 import com.management.khal_management.model.ItemModel;
 import com.management.khal_management.repository.IItemRepository;
 import com.management.khal_management.service.contract.IItemService;
@@ -25,41 +26,41 @@ public class ItemService implements IItemService {
     }
 
     @Override
-    public ItemDto addItem(ItemDto itemDtoToAdd) {
+    public ItemResponseDto addItem(ItemRequestDto itemDtoToAdd) {
         ItemModel modelItemModel = modelMapper.map(itemDtoToAdd, ItemModel.class);
         ItemModel addedItemModel = IItemRepository.save(modelItemModel);
-        ItemDto addedItemDtoDto = modelMapper.map(addedItemModel, ItemDto.class);
+        ItemResponseDto addedItemDtoDto = modelMapper.map(addedItemModel, ItemResponseDto.class);
         return addedItemDtoDto;
     }
 
     @Override
-    public ItemDto deleteItem(Long itemId) {
+    public ItemResponseDto deleteItem(Long itemId) {
 
         Optional<ItemModel> itemFromModel = IItemRepository.findById(itemId);
         IItemRepository.deleteById(itemId);
-        ItemDto deletedItemDto = modelMapper.map(itemFromModel, ItemDto.class);
+        ItemResponseDto deletedItemDto = modelMapper.map(itemFromModel, ItemResponseDto.class);
         return deletedItemDto;
     }
 
     @Override
-    public ItemDto updateItem(ItemDto itemDtoToUpdate) {
+    public ItemResponseDto updateItem(ItemRequestDto itemDtoToUpdate) {
         ItemModel itemModelForModel = modelMapper.map(itemDtoToUpdate, ItemModel.class);
         ItemModel updatedItemModel = IItemRepository.save(itemModelForModel);
-        ItemDto updatedItemDtoDto = modelMapper.map(updatedItemModel, ItemDto.class);
+        ItemResponseDto updatedItemDtoDto = modelMapper.map(updatedItemModel, ItemResponseDto.class);
         return updatedItemDtoDto;
     }
 
     @Override
-    public List<ItemDto> getItems() {
+    public List<ItemResponseDto> getItems() {
         List<ItemModel> itemsFromModel = IItemRepository.findAll();
-        List<ItemDto> itemDtos = modelMapper.map(itemsFromModel,  new TypeToken<List<ItemDto>>(){}.getType());
+        List<ItemResponseDto> itemDtos = modelMapper.map(itemsFromModel,  new TypeToken<List<ItemResponseDto>>(){}.getType());
         return itemDtos;
     }
 
     @Override
-    public ItemDto getItemById(Long id) {
+    public ItemResponseDto getItemById(Long id) {
         ItemModel iteFromModel = IItemRepository.findById(id).get();
-        ItemDto itemDto = modelMapper.map(iteFromModel, ItemDto.class);
+        ItemResponseDto itemDto = modelMapper.map(iteFromModel, ItemResponseDto.class);
         return itemDto;
     }
 }

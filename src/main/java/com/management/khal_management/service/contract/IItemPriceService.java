@@ -1,17 +1,19 @@
 package com.management.khal_management.service.contract;
 
-import com.management.khal_management.dtos.ItemPriceDto;
+import com.management.khal_management.dtos.item_price.AddItemPriceRequestDto;
+import com.management.khal_management.dtos.item_price.ItemPriceResponseDto;
+import com.management.khal_management.dtos.item_price.UpdateItemPriceRequestDto;
 
 import java.util.List;
 
 public interface IItemPriceService {
-    ItemPriceDto createItemPrice(ItemPriceDto itemPriceDto);
+    ItemPriceResponseDto createItemPrice(AddItemPriceRequestDto itemPriceDto);
 
-    ItemPriceDto updateItemPrice(ItemPriceDto updatedItemPriceDto);
+    ItemPriceResponseDto updateItemPrice(UpdateItemPriceRequestDto updatedItemPriceDto);
 
-    ItemPriceDto deleteItemPrice(Long id);
+    ItemPriceResponseDto deleteItemPrice(Long id);
 
-    List<ItemPriceDto> getAllItemPrices();
+    List<ItemPriceResponseDto> getAllItemPrices();
 
-    ItemPriceDto getItemPriceById(Long id);
+    ItemPriceResponseDto getItemPriceById(Long id);
 }

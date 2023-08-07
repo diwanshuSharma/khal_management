@@ -1,4 +1,4 @@
-package com.management.khal_management.dtos;
+package com.management.khal_management.dtos.item_price;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ItemDto extends BaseDto{
-    private String itemName;
-    private String url;
+public class UpdateItemPriceRequestDto {
+    private Long id;
+    private Double price;
 }

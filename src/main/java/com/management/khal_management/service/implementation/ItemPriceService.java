@@ -1,8 +1,12 @@
 package com.management.khal_management.service.implementation;
 
-import com.management.khal_management.dtos.ItemPriceDto;
+import com.management.khal_management.dtos.item_price.AddItemPriceRequestDto;
+import com.management.khal_management.dtos.item_price.ItemPriceResponseDto;
+import com.management.khal_management.dtos.item_price.UpdateItemPriceRequestDto;
+import com.management.khal_management.model.ItemModel;
 import com.management.khal_management.model.ItemPriceModel;
 import com.management.khal_management.repository.IItemPriceRepository;
+import com.management.khal_management.repository.IItemRepository;
 import com.management.khal_management.service.contract.IItemPriceService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -13,60 +17,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 
 public class ItemPriceService implements IItemPriceService {
-    private final IItemPriceRepository IItemPriceRepository;
+    private final IItemPriceRepository itemPriceRepository;
+    private final IItemRepository itemRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public ItemPriceService(IItemPriceRepository IItemPriceRepository, ModelMapper modelMapper) {
-        this.IItemPriceRepository = IItemPriceRepository;
+    public ItemPriceService(IItemPriceRepository itemPriceRepository, IItemRepository itemRepository, ModelMapper modelMapper) {
+        this.itemPriceRepository = itemPriceRepository;
+        this.itemRepository = itemRepository;
         this.modelMapper = modelMapper;
     }
 
     @Transactional
     @Override
-    public ItemPriceDto createItemPrice(ItemPriceDto itemPriceDto) {
-        ItemPriceModel itemPriceModel = modelMapper.map(itemPriceDto, ItemPriceModel.class);
-        itemPriceModel = IItemPriceRepository.save(itemPriceModel);
-        ItemPriceDto itemPrice = modelMapper.map(itemPriceModel, ItemPriceDto.class);
+    public ItemPriceResponseDto createItemPrice(AddItemPriceRequestDto itemPriceDto) {
+        ItemModel item = itemRepository.findById(itemPriceDto.getItemId()).get();
+
+        ItemPriceModel itemPriceModel = new ItemPriceModel();
+        itemPriceModel.setItemModel(item);
+        itemPriceModel.setPrice(itemPriceDto.getPrice());
+        itemPriceModel = itemPriceRepository.save(itemPriceModel);
+
+        ItemPriceResponseDto itemPrice = modelMapper.map(itemPriceModel, ItemPriceResponseDto.class);
         return itemPrice;
     }
 
     @Transactional
     @Override
-    public ItemPriceDto updateItemPrice(ItemPriceDto updatedItemPriceDto) {
-        ItemPriceModel existingItemPrice = IItemPriceRepository.findById(updatedItemPriceDto.getId())
+    public ItemPriceResponseDto updateItemPrice(UpdateItemPriceRequestDto updatedItemPriceDto) {
+        ItemPriceModel existingItemPrice = itemPriceRepository.findById(updatedItemPriceDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("ItemPriceDto not found"));
 
         existingItemPrice.setPrice(updatedItemPriceDto.getPrice());
 
-        existingItemPrice = IItemPriceRepository.save(existingItemPrice);
-        ItemPriceDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceDto.class);
+        existingItemPrice = itemPriceRepository.save(existingItemPrice);
+        ItemPriceResponseDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceResponseDto.class);
         return  itemPrice;
     }
 
     @Transactional
     @Override
-    public ItemPriceDto deleteItemPrice(Long id) {
-        ItemPriceModel existingItemPrice = IItemPriceRepository.findById(id)
+    public ItemPriceResponseDto deleteItemPrice(Long id) {
+        ItemPriceModel existingItemPrice = itemPriceRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("ItemPriceDto not found"));
 
-        IItemPriceRepository.delete(existingItemPrice);
-        ItemPriceDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceDto.class);
+        itemPriceRepository.delete(existingItemPrice);
+        ItemPriceResponseDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceResponseDto.class);
         return  itemPrice;
     }
 
     @Override
-    public List<ItemPriceDto> getAllItemPrices() {
-        List<ItemPriceModel> itemPrices = IItemPriceRepository.findAll();
-        List<ItemPriceDto> itemPricesDto = modelMapper.map(itemPrices,  new TypeToken<List<ItemPriceDto>>(){}.getType());
+    public List<ItemPriceResponseDto> getAllItemPrices() {
+        List<ItemPriceModel> itemPrices = itemPriceRepository.findAll();
+        List<ItemPriceResponseDto> itemPricesDto = modelMapper.map(itemPrices,  new TypeToken<List<ItemPriceResponseDto>>(){}.getType());
         return itemPricesDto;
     }
 
     @Override
-    public ItemPriceDto getItemPriceById(Long id) {
-        ItemPriceModel  existingItemPrice = IItemPriceRepository.findById(id)
+    public ItemPriceResponseDto getItemPriceById(Long id) {
+        ItemPriceModel  existingItemPrice = itemPriceRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("ItemPriceDto not found"));
-        ItemPriceDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceDto.class);
+        ItemPriceResponseDto itemPrice = modelMapper.map(existingItemPrice, ItemPriceResponseDto.class);
         return  itemPrice;
     }
 }

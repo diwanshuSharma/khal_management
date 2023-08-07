@@ -1,5 +1,7 @@
 package com.management.khal_management.controller;
-import com.management.khal_management.dtos.ItemPriceDto;
+import com.management.khal_management.dtos.item_price.AddItemPriceRequestDto;
+import com.management.khal_management.dtos.item_price.ItemPriceResponseDto;
+import com.management.khal_management.dtos.item_price.UpdateItemPriceRequestDto;
 import com.management.khal_management.service.contract.IItemPriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -18,32 +20,32 @@ public class ItemPriceController {
     }
 
     @PostMapping
-    public ItemPriceDto createItemPrice(@RequestBody ItemPriceDto itemPrice) {
-        ItemPriceDto createdItemPrice = itemPriceService.createItemPrice(itemPrice);
+    public ItemPriceResponseDto createItemPrice(@RequestBody AddItemPriceRequestDto itemPrice) {
+        ItemPriceResponseDto createdItemPrice = itemPriceService.createItemPrice(itemPrice);
         return createdItemPrice;
     }
 
     @PutMapping("/{id}")
-    public ItemPriceDto updateItemPrice(@RequestBody ItemPriceDto updatedItemPrice) {
-        ItemPriceDto updatedPrice = itemPriceService.updateItemPrice(updatedItemPrice);
+    public ItemPriceResponseDto updateItemPrice(@RequestBody UpdateItemPriceRequestDto updatedItemPrice) {
+        ItemPriceResponseDto updatedPrice = itemPriceService.updateItemPrice(updatedItemPrice);
         return updatedPrice;
     }
 
     @DeleteMapping("/{id}")
-    public ItemPriceDto deleteItemPrice(@PathVariable Long id) {
-        ItemPriceDto itemPrice = itemPriceService.deleteItemPrice(id);
+    public ItemPriceResponseDto deleteItemPrice(@PathVariable Long id) {
+        ItemPriceResponseDto itemPrice = itemPriceService.deleteItemPrice(id);
         return itemPrice;
     }
 
     @GetMapping
-    public List<ItemPriceDto> getAllItemPrices() {
-        List<ItemPriceDto> itemPrices = itemPriceService.getAllItemPrices();
+    public List<ItemPriceResponseDto> getAllItemPrices() {
+        List<ItemPriceResponseDto> itemPrices = itemPriceService.getAllItemPrices();
         return itemPrices;
     }
 
     @GetMapping("/{id}")
-    public ItemPriceDto getItemPriceById(@PathVariable Long id) {
-        ItemPriceDto itemPrice = itemPriceService.getItemPriceById(id);
+    public ItemPriceResponseDto getItemPriceById(@PathVariable Long id) {
+        ItemPriceResponseDto itemPrice = itemPriceService.getItemPriceById(id);
         return itemPrice;
     }
 }

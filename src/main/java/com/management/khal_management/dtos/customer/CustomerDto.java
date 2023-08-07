@@ -1,5 +1,7 @@
-package com.management.khal_management.dtos;
+package com.management.khal_management.dtos.customer;
 
+import com.management.khal_management.dtos.BaseDto;
+import com.management.khal_management.dtos.address.AddressDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,7 +13,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CustomerDto extends BaseDto{
+public class CustomerDto extends BaseDto {
     private String customerName;
     private Date dob;
     private long mobileNumber;

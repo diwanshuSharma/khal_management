@@ -1,6 +1,6 @@
 package com.management.khal_management.controller;
 
-import com.management.khal_management.dtos.CustomerDto;
+import com.management.khal_management.dtos.customer.CustomerDto;
 import com.management.khal_management.service.contract.ICustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

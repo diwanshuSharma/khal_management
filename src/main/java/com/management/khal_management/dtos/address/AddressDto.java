@@ -1,5 +1,6 @@
-package com.management.khal_management.dtos;
+package com.management.khal_management.dtos.address;
 
+import com.management.khal_management.dtos.BaseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AddressDto extends BaseDto{
+public class AddressDto extends BaseDto {
     private String address;
     private String village;
     private String thesil;

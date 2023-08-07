@@ -1,6 +1,6 @@
 package com.management.khal_management.service.implementation;
 
-import com.management.khal_management.dtos.CustomerDto;
+import com.management.khal_management.dtos.customer.CustomerDto;
 import com.management.khal_management.model.CustomerModel;
 import com.management.khal_management.repository.ICustomerRepository;
 import com.management.khal_management.service.contract.ICustomerService;
