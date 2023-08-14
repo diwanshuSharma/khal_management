@@ -53,6 +53,10 @@ public class PurchaseTransactionService implements IPurchaseTransactionService {
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
 
         PurchaseTransactionModel purchaseTransactionModel = modelMapper.map(requestDto, PurchaseTransactionModel.class);
+
+        double totalPrice = requestDto.getUnitPrice() * requestDto.getNumberOfUnits();
+        purchaseTransactionModel.setTotalPrice(totalPrice);
+
         purchaseTransactionModel.setSupplier(supplierModel);
         purchaseTransactionModel.setItem(itemModel);
         purchaseTransactionModel.setUnit(unitModel);
@@ -91,6 +95,10 @@ public class PurchaseTransactionService implements IPurchaseTransactionService {
                 .orElseThrow(() -> new ChangeSetPersister.NotFoundException());
 
         modelMapper.map(requestDto, purchaseTransactionToUpdate);
+
+        double totalPrice = requestDto.getUnitPrice() * requestDto.getNumberOfUnits();
+        purchaseTransactionToUpdate.setTotalPrice(totalPrice);
+
         purchaseTransactionToUpdate.setSupplier(supplierModel);
         purchaseTransactionToUpdate.setItem(itemModel);
         purchaseTransactionToUpdate.setUnit(unitModel);
