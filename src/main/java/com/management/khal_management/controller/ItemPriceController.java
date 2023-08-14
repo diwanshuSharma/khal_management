@@ -25,7 +25,7 @@ public class ItemPriceController {
         return createdItemPrice;
     }
 
-    @PutMapping("/{id}")
+    @PutMapping
     public ItemPriceResponseDto updateItemPrice(@RequestBody UpdateItemPriceRequestDto updatedItemPrice) {
         ItemPriceResponseDto updatedPrice = itemPriceService.updateItemPrice(updatedItemPrice);
         return updatedPrice;

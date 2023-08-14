@@ -9,11 +9,13 @@ import com.management.khal_management.repository.*;
 import com.management.khal_management.service.contract.ITransactionService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
+@Service
 public class TransactionService implements ITransactionService {
 
     private final ITransactionRepository transactionRepository;
