@@ -8,7 +8,7 @@ import java.util.List;
 
 @Repository
 public interface ITransactionRepository extends JpaRepository<TransactionModel, Long> {
-    List<TransactionModel> getAllTransactionsForCustomer(Long customerId);
-    List<TransactionModel> findByCustomerModel_IdOrderByCreatedAtAsc(Long customerId);
-    List<TransactionModel> findByCustomerModel_IdOrderByCreatedAtDesc(Long customerId);
+//    List<TransactionModel> getAllTransactionsForCustomer(Long customerId);
+//    List<TransactionModel> findByCustomerModel_IdOrderByCreatedAtAsc(Long customerId);
+//    List<TransactionModel> findByCustomerModel_IdOrderByCreatedAtDesc(Long customerId);
 }

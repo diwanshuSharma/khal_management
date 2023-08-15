@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IItemPriceRepository extends JpaRepository<ItemPriceModel, Long> {
+    // Custom method to retrieve the latest price for a given item ID
+    ItemPriceModel findTopByItemModelIdOrderByCreatedAtDesc(Long itemId);
+
 }

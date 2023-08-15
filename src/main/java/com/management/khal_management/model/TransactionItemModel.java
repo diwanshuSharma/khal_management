@@ -1,14 +1,13 @@
 package com.management.khal_management.model;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
 @Entity
+@Table(name = "transaction_items")
 public class TransactionItemModel extends BaseModel{
 
     @ManyToOne(cascade = CascadeType.ALL)

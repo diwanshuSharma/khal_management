@@ -12,8 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class TransactionService implements ITransactionService {
@@ -48,14 +49,13 @@ public class TransactionService implements ITransactionService {
         //set customer
         CustomerModel customer = customerRepository.findById(requestDto.getCustomer_id()).get();
         transaction.setCustomerModel(customer);
+        //transaction = transactionRepository.save(transaction);
 
         // Populate and save TransactionItemModel instances
         List<TransactionItemModel> transactionItems = new ArrayList<>();
         for (ItemQuantityRequestDto itemDto : requestDto.getItems()) {
             ItemModel item = itemRepository.findById(itemDto.getItem_id()).get();
-            ItemPriceModel itemPrice = itemPriceRepository.findById(item.getId()).
-                    stream().sorted(Comparator.comparing(BaseModel::getCreatedAt)).
-                    findFirst().get();
+            ItemPriceModel itemPrice = itemPriceRepository.findTopByItemModelIdOrderByCreatedAtDesc(item.getId());
 
             itemLevelTotal =  itemDto.getQuantity() * itemPrice.getPrice();
             if(itemLevelTotal <= moneyProvided){
@@ -76,6 +76,7 @@ public class TransactionService implements ITransactionService {
             transactionItem.setPaidAmount(paidAmount);
             transactionItem.setPendingAmount(pendingAmount);
             transactionItem.setTotalAmount(itemLevelTotal);
+            transactionItem.setTransactionModel(transaction);
 
             transactionItems.add(transactionItem);
 
@@ -87,38 +88,73 @@ public class TransactionService implements ITransactionService {
 
         // Save the transaction and its items
         List<TransactionItemModel> savedTransaction = transactionItemRepository.saveAll(transactionItems);
+        //transactionRepository.save(transaction);
 
         // Convert savedTransaction to TransactionResponseDto
-        TransactionResponseDto responseDto = getTransactionResponseDto(savedTransaction);
+        List<TransactionResponseDto> responseList = getTransactionResponseDto(savedTransaction);
 
-        return responseDto;
+        return responseList.get(0);
 
     }
 
-    private TransactionResponseDto getTransactionResponseDto(List<TransactionItemModel> savedTransaction) {
+    private List<TransactionResponseDto> getTransactionResponseDto(List<TransactionItemModel> savedTransaction) {
         double pendingAmount;
         double paidAmount;
         double totalPrice;
-        TransactionResponseDto responseDto = new TransactionResponseDto();
-        List<TransactionItemResponseDto> transactionItemsDto = new ArrayList<>();
+        Long transactionId = null;
+
+        TransactionResponseDto responseDto = null;
+        List<TransactionItemResponseDto> transactionItemsDto = null;
         TransactionItemResponseDto transactionItemResponseDto = null;
-        totalPrice = 0;
-        pendingAmount = 0;
-        paidAmount = 0;
+
+        HashMap<Long, TransactionResponseDto> map = new HashMap<>();
 
         for(TransactionItemModel savedTransactionItem : savedTransaction){
-            transactionItemResponseDto = modelMapper.map(savedTransactionItem, TransactionItemResponseDto.class);
-            transactionItemsDto.add(transactionItemResponseDto);
 
-            paidAmount += savedTransactionItem.getPaidAmount();
-            pendingAmount += savedTransactionItem.getPendingAmount();
-            totalPrice += savedTransactionItem.getTotalAmount();
+            //1. transaction id is there in map - no
+            // create entry in map for respective DTO object
+            transactionId = savedTransactionItem.getTransactionModel().getId();
+            if(!map.containsKey(transactionId)){
+                responseDto = new TransactionResponseDto();
+                transactionItemsDto = new ArrayList<>();
+                responseDto.setTransactionItems(transactionItemsDto);
+                responseDto.setId(savedTransactionItem.getTransactionModel().getId());
+                responseDto.setCreatedAt(savedTransactionItem.getTransactionModel().getCreatedAt());
+                responseDto.setUpdatedAt(savedTransactionItem.getTransactionModel().getUpdatedAt());
+                map.put(transactionId, responseDto);
+            }
+            //2. exists in map
+                responseDto = map.get(transactionId);
+                transactionItemsDto = responseDto.getTransactionItems();
+                transactionItemResponseDto = modelMapper.map(savedTransactionItem, TransactionItemResponseDto.class);
+                transactionItemsDto.add(transactionItemResponseDto);
+
+
+                paidAmount = responseDto.getPaidAmount();
+                pendingAmount = responseDto.getPendingAmount();
+                totalPrice = responseDto.getTotalPrice();
+
+                paidAmount += savedTransactionItem.getPaidAmount();
+                pendingAmount += savedTransactionItem.getPendingAmount();
+                totalPrice += savedTransactionItem.getTotalAmount();
+
+                responseDto.setPaidAmount(paidAmount);
+                responseDto.setPendingAmount(pendingAmount);
+                responseDto.setTotalPrice(totalPrice);
         }
 
-        responseDto.setTransactionItems(transactionItemsDto);
-        responseDto.setPaidAmount(paidAmount);
-        responseDto.setPendingAmount(pendingAmount);
-        responseDto.setTotalPrice(totalPrice);
-        return responseDto;
+        List<TransactionResponseDto> responseList = new ArrayList<>();
+
+        for(Map.Entry<Long, TransactionResponseDto> e : map.entrySet()){
+            responseList.add(e.getValue());
+        }
+
+        return responseList;
+    }
+
+    @Override
+    public List<TransactionResponseDto> getAllTransactionsForCustomerHavingPendingAmount(Long customer_id){
+        List<TransactionItemModel> transactionItemModels = transactionItemRepository.findByTransactionModel_CustomerModel_IdAndPendingAmountGreaterThanOrderByCreatedAtAsc(customer_id, 0.0);
+        return getTransactionResponseDto(transactionItemModels);
     }
 }

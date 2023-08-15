@@ -1,18 +1,20 @@
 package com.management.khal_management.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Setter
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
+@Setter
+@Entity
+@Table(name = "purchase_transactions")
 public class PurchaseTransactionModel extends BaseModel{
 
+    @ManyToOne
     private SupplierModel supplier;
+    @ManyToOne
     private ItemModel item;
+    @ManyToOne
     private UnitModel unit;
     private double unitPrice;
     private double numberOfUnits;

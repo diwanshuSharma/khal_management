@@ -2,15 +2,18 @@ package com.management.khal_management.service.implementation;
 
 import java.util.*;
 import com.management.khal_management.model.TransactionItemModel;
-import com.management.khal_management.model.TransactionModel;
 import com.management.khal_management.repository.ITransactionItemRepository;
-import com.management.khal_management.service.contract.ICustomerTransactionSettlement;
+import com.management.khal_management.service.contract.ICustomerTransactionSettlementService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-public class CustomerTransactionSettlement implements ICustomerTransactionSettlement {
+@Service
+public class CustomerTransactionSettlementService implements ICustomerTransactionSettlementService {
 
     private final ITransactionItemRepository transactionItemRepository;
 
-    public CustomerTransactionSettlement(ITransactionItemRepository transactionItemRepository){
+    @Autowired
+    public CustomerTransactionSettlementService(ITransactionItemRepository transactionItemRepository){
         this.transactionItemRepository = transactionItemRepository;
     }
 

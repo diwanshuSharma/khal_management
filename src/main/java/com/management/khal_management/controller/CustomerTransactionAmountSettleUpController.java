@@ -1,6 +1,6 @@
 package com.management.khal_management.controller;
 
-import com.management.khal_management.service.contract.ICustomerTransactionSettlement;
+import com.management.khal_management.service.contract.ICustomerTransactionSettlementService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = "/api/customer-transaction-amount-settle-up")
 public class CustomerTransactionAmountSettleUpController {
 
-    private final ICustomerTransactionSettlement customerTransactionSettlement;
+    private final ICustomerTransactionSettlementService customerTransactionSettlement;
 
-    public CustomerTransactionAmountSettleUpController(ICustomerTransactionSettlement customerTransactionSettlement) {
+    public CustomerTransactionAmountSettleUpController(ICustomerTransactionSettlementService customerTransactionSettlement) {
         this.customerTransactionSettlement = customerTransactionSettlement;
     }
 

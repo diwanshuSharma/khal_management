@@ -19,8 +19,6 @@ public class PurchaseTransactionRequestDto extends BaseDto {
     private Long unitId;
     private double unitPrice;
     private double numberOfUnits;
-    private double totalPrice;
     private double rateOfInterest;
     private double timeInterval;
-    private double totalAfterInterest;
 }

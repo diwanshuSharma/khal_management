@@ -12,7 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/units")
-@Validated
 public class UnitController {
 
     private final IUnitService unitService;
